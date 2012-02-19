@@ -1,0 +1,232 @@
+/* CSS Document */
+body{padding:0px; margin:0px; background:url(images/347.gif) 0 0 repeat; color:#7D7D7D; font:14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;}
+div, p, ul, form, label, h2, h3, h4, img{padding:0px; margin:0px;}
+ul{list-style-type:none;}
+
+/*----TOP PANEL----*/
+div#domek{width:778px; margin:0 auto; background:white; }
+
+#topPan{width:778px; height:184px; background:url(images/logo.jpg) 0 0 no-repeat; position:relative;}
+#topPan img.logo{width:448px; height:45px; position:absolute; top:139px; right:0px;}
+
+#topPan ul{width:140px; height:29px; background:url(images/top-nav.gif) 0 0 no-repeat; position:absolute; top:23px; left:195px;}
+#topPan ul li{float:left;}
+
+#topPan ul li.home{width:47px; height:29px; float:left;}
+#topPan ul li.home a{width:18px; height:16px; display:block; background:url(images/home-hover.gif) 0 0 no-repeat; margin:3px 0 0 16px;  text-indent:-20000px;}
+#topPan ul li.home a:hover{background:url(images/home-hover.gif) 0 0 no-repeat;}
+
+#topPan ul li.sitemap{width:43px; height:29px; float:left;}
+#topPan ul li.sitemap a{width:18px; height:16px; display:block; background:url(images/sitemap-nor.gif) 0 0 no-repeat; margin:3px 0 0 15px;  text-indent:-20000px;}
+#topPan ul li.sitemap a:hover{background:url(images/sitemap-hover.gif) 0 0 no-repeat;}
+
+#topPan ul li.contact{width:43px; height:29px; float:left;}
+#topPan ul li.contact a{width:18px; height:16px; display:block; background:url(images/contact-nor.gif) 0 0 no-repeat; margin:3px 0 0 15px;  text-indent:-20000px;}
+#topPan ul li.contact a:hover{background:url(images/contact-hover.gif) 0 0 no-repeat;}
+
+#kwadracik {width:430px; height:40px;  position:absolute; bottom:0px;  }
+
+/*----/TOP PANEL----*/
+
+/*----BODY TOP PANEL----*/
+#bodytopPan{width:778px; position:relative; padding:13px 0 0;}
+/*----Body Top Left Panel----*/
+#btleftPan{width:520px; float:left; padding:0 15px;}
+#btleftPan h2{width:400px; height:53px; background:#fff; color:#ff8700; font:30px/53px Georgia, "Times New Roman", Times, serif;}
+
+#btleftPan p span{font-weight:bold;}
+
+#btleftPan p.more{width:73px; height:25px; margin:0 0 0 417px; font:12px/24px Arial, Helvetica, sans-serif; font-weight:bold; text-transform:uppercase;}
+#btleftPan p.more a{width:53px; height:25px; display:block; background:url(images/rollover-nor.gif) 0 0 no-repeat #FAFAFA; color:#fff; padding:0 0 0 20px; text-decoration:none;}
+#btleftPan p.more a:hover{background:url(images/rollover-hover.gif) 0 0 no-repeat #FAFAFA; color:#A67B03; text-decoration:none;}
+/*----moje zmiany----*/
+#btleftPan h3{width:520px;  background:#fff; color:#ff8700; font:20px/30px Georgia, "Times New Roman", Times, serif;}
+
+#btleftPan h5{width:480px; height:20px; background:#fff; color:#ff8700; font:18px Georgia, "Times New Roman", Times, serif; text-align:right;}
+
+#btleftPan p{padding:6px 0;}
+#btleftPan p span{font-weight:bold;}
+
+#btleftPan p.greencaptiontext{background:#fff; height:72px; color:#ABA501; font:18px/24px Georgia, "Times New Roman", Times, serif; font-style:italic; padding:10px 0 0;}
+
+#btleftPan form input.botton{width:150px; height:23px; display:block; background:#fff; color:#ff8700; border:none; font:16px/23px Georgia, "Times New Roman", Times, serif; font-weight:bold;}
+/*----/Body Top Left Panel----*/
+
+/*----Body Top Right Panel----*/
+#btrightPan{width:218px; float:right; font-family:Arial, Helvetica, sans-serif;}
+
+#menu {width:203px; height:58px; display:block; background:url(images/side-frame.jpg) 0 0 no-repeat;  line-height:18px; position:relative; margin:0 auto;}
+#menu h2{width:80px; height:22px; display:block; background:#fff; color:#FF8700; font-size:18px; position:absolute; top:7px; left:86px;}
+#menu p{font-size:14px; position:absolute; top:30px; left:86px;color: #7d7d7d;}
+
+
+#menu a{width:202px; height:58px; display:block; text-decoration:none; margin:0 0 0 1px;}
+
+#menu a.planning{background:url(images/planning-nor.jpg) 13px 1px no-repeat; }
+#menu a.graph{background:url(images/graph-nor.jpg) 13px 0 no-repeat;}
+#menu a.services{background:url(images/services-nor.jpg) 13px 1px no-repeat; }
+#menu a.projects{background:url(images/projects-nor.jpg) 13px 1px no-repeat;}
+#menu a.info{background:url(images/info-nor.jpg) 13px 1px no-repeat;}
+
+#menu a.planning:hover{background:url(images/planning-hover.jpg) 13px 1px no-repeat; text-decoration:none;}
+#menu a.graph:hover{background:url(images/graph-hover.jpg) 13px 0 no-repeat; text-decoration:none;}
+#menu a.services:hover{background:url(images/services-hover.jpg) 13px 1px no-repeat; text-decoration:none;}
+#menu a.projects:hover{background:url(images/projects-hover.jpg) 13px 1px no-repeat; text-decoration:none;}
+#menu a.info:hover{background:url(images/info-hover.jpg) 13px 1px no-repeat; text-decoration:none;}
+
+
+/*----/Body Top Right Panel----*/
+
+/*----/Bottom Left Panel----*/
+
+/*----Bottom Right Panel----*/
+#bottomrightPan{width:407px; float:left; padding:42px 0 0 0px;}
+#bottomrightPan h2{width:350px; height:33px; font:30px/33px Georgia, "Times New Roman", Times, serif; background:#fff; color:#FF8500;}
+#bottomrightPan h3{width:115px; height:40px; font:18px/40px Georgia, "Times New Roman", Times, serif; background:url(images/athorname-border.gif) 0 15px no-repeat #fff; color:#FF8500; padding:0 0 0 291px;}
+
+#bottomrightPan p{padding:6px 0;}
+#bottomrightPan p span{font-weight:bold;}
+
+#bottomrightPan p.greencaptiontext{background:#fff; height:72px; color:#ABA501; font:18px/24px Georgia, "Times New Roman", Times, serif; font-style:italic; padding:10px 0 0;}
+/*----/Bottom Right Panel----*/
+
+/*----FOOTER PANEL----*/
+#footermainPan{height:70px; background:url(images/footerbg.gif) 0 0 repeat-x #F1F1F1; color:#585858; font:13px/20px "Trebuchet MS",Arial, Helvetica, sans-serif; clear:both; padding:38px 0 0 0;}
+
+#footerPan{width:706px; position:relative; padding:0 0 0 36px;}
+
+#footerPan ul{width:480px; height:20px; position:relative; margin:0 auto;}
+#footerPan li{float:left; }
+#footerPan ul li a{padding:0 10px 0; color:#585858; background:#F1F1F1; text-decoration:none; font-size:12px;}
+#footerPan ul li a:hover{text-decoration:underline;}
+
+#footerPan p.copyright{width:260px; position:relative; margin:0 auto; background:#F1F1F1; color:#9F5300;  font-size:13px;}
+
+#footerPan ul.templateworld{width:350px; background:#F1F1F1; color:#585858; display:block; position:center; top: 10px; font-size:11px;}
+#footerPan ul.templateworld li{height:20px;}
+#footerPan ul.templateworld li a{background:#F1F1F1;  color:#585858; text-decoration:none; padding:0px;}
+#footerPan ul.templateworld li a:hover{text-decoration:underline;}
+
+#footerPanhtml{width:70px; height:24px; display:block; position:absolute; top:45px; left:285px;}
+#footerPanhtml a{width:66px; height:24px; display:block; background:url(images/html-nor.gif) 0 0 no-repeat #F1F1F1; color:#fff; font-size:14px; line-height:24px; font-weight:bold; text-decoration:none;text-transform:uppercase; padding:0 0 0 4px;}
+#footerPanhtml a:hover{background:url(images/html-hover.gif) 0 0 no-repeat #3B3B3B; color:#fff;}
+#footerPancss{width:58px; height:24px; display:block; position:absolute; top:45px; left:360px;}
+#footerPancss a{width:50px; height:24px; display:block; background:url(images/css-nor.gif) 0 0 no-repeat #F1F1F1; color:#fff; font-size:14px; line-height:24px; font-weight:bold; text-decoration:none; text-transform:uppercase; padding:0 0 0 8px;}
+#footerPancss a:hover{background:url(images/css-hover.gif) 0 0 no-repeat #3B3B3B; color:#fff; text-decoration:none;}
+/*----/FOOTER PANEL----*/
+
+table.sample {
+    border-width: 1px;
+    border-spacing: 0px;
+    border-style: inset;
+    border-color: gray;
+    border-collapse: collapse;
+    background-color: white;
+}
+table.sample th {
+    border-width: 1px;
+    padding: 5px;
+    border-style: outset;
+    border-color: gray;
+    background-color: white;
+    -moz-border-radius: 0px 0px 0px 0px;
+}
+table.sample td {
+    border-width: 1px;
+    padding: 5px;
+    border-style: outset;
+    border-color: gray;
+    background-color: white;
+    -moz-border-radius: 0px 0px 0px 0px;
+}
+
+table.dwa {
+    border-width: 1px;
+    border-spacing: 0px;
+    border-style: inset;
+    border-color: gray;
+    border-collapse: collapse;
+    background-color: white;
+    width:100%;
+}
+
+
+table.dwa td  {
+    font-size:1em;
+    border:1px solid  #7d7d7d;
+    padding:5px 7px 5px 7px;
+}
+
+
+table.dwa th {
+    border:1px solid #7d7d7d;
+    font-size:1.1em;
+    text-align:center;
+    padding-top:5px;
+    padding-bottom:5px;
+    background-color:#929292;
+    color:#ffffff;
+}
+
+
+#customers tr.alt td
+{
+    color:#000000;
+    background-color:#EAF2D3;
+}
+
+a {
+    text-decoration: none;
+    color:#ff6900 ;
+}
+a:hover {
+    color:#ff6900 ;
+}
+a:visited {
+    color: #ff6600;
+}
+
+a.dwa {
+    text-decoration: none;
+    color:#a8a8a8 ;
+}
+
+.pagination {
+    text-align: center;
+}
+
+img {
+    border: 5;
+}
+
+ul.errorlist {
+    color: #ff3300;
+}
+
+p.ok {
+    text-align: center;
+    color: #006633;
+}
+
+p.niet {
+    text-align: center;
+    color: #ff3300;
+}
+a.tab {
+    color:white;
+}
+
+td.row1 {
+    background-color:#f8f8f8;
+}
+
+td.row2 {
+    background-color: white;
+}
+
+form.foremka{
+}
+
+.foremka td {
+    font-size:0.9em;
+}
