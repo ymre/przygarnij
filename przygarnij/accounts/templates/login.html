@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Login to Głupotki</h2>
+<form action="/login/" method="post">{% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input name="loguj" type="submit" class="botton" id="Login" value="Zaloguj się" />
+</form>
+
+<br><br>
+<h3>Nie masz konta?</h3>
+    <p>Zarejestruj się. Dzięki temu będziesz mógł wystawić własne ogłoszenie.</p>
+    <p><a href={% url register %}>Rejestracja</a> &nbsp; &nbsp;&nbsp; &nbsp;<a href={% url pass_reset %}>Przypominanie hasła</a></p>
+
+{% endblock %}

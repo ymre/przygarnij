@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Przypomnienie hasła</h2>
+Podaj swój adres email aby przypomnieć hasło.
+<form action="/reset_pass/" method="post">{% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" class="botton" value="Zresetuj hasło">
+</form>
+
+
+{% endblock %}
