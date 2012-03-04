@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Nowe ogłoszenie</h3>
+<form enctype="multipart/form-data" action="/adv/add/" method="post">{% csrf_token %} 
+    <table>
+        {{ form }}
+    </table>
+<input type="submit" class="botton" value="Dodaj">
+
+</form>
+<br>Pola z * są obowiązkowe.
+
+{% endblock %}

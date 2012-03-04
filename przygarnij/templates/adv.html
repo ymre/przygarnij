@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h3>[{{ adv.id }}]  {{ adv.title }} </h3>
+
+    <p><span>Autor:</span> <a href="/userpage/{{ adv.user }}">{{ adv.user }}</a>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span> Miasto: </span> {{ adv.city }} &nbsp; &nbsp;<span>Dodano: </span> {{ adv.add_time|date:"d-m-y"  }} </p>
+
+    <p><Span>Co:</Span> {{ adv.what|linebreaks }}</p>
+
+    {% if adv.what_for %}
+        <p><Span>Za co:</Span>{{ adv.what_for|linebreaks }}</p>
+    {% endif %}
+
+{% if adv.user == user %}
+    <p class="more"><a href="/adv/{{ adv.id }}/edit">edytuj</a></p>
+{% else %}
+    {% if adv.enable %}
+        <p class="more"><a href="/adv/{{ adv.id }}/ans">odpisz</a></p>
+    {% else %}
+        <p><i>Ogłoszenie archiwalne</i></p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

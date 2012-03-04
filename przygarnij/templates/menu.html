@@ -1,44 +1,44 @@
 </div>
 <div id="btrightPan">
-  	<div id="menu">
-		<a class="graph" href="/adv/">
-		<h2>Ogłoszenia</h2>
-			<p>szukaj</p>
-			</a>
-		</div> 
-		<div id="menu">
-		<a class="planning" href="/adv/add/">
-			<h2>Dodaj</h2>
-			<p>ogłoszenie</p>
-		</a>
-		</div>
-		<div id="menu">
-			<a class="services" href="/panel/">
-			<h2>Twoje</h2>
-			<p>konto</p>
-			</a>
-		</div>
-		{% if user.is_authenticated  %}
-		<div id="menu">
-			<a class="projects" href="/loggedout/">
-			<h2>Wyloguj</h2>
-			<p>się</p>
-			</a>
-		</div>
-		{% else %}
-		<div id="menu">
-			<a class="projects" href="/login/">
-			<h2>Logowanie</h2>
-			<p>rejestracja</p>
-			</a>
-		</div>
-		{% endif %}
-		<div id="menu">
-			<a class="info" href="/about/">
-	<h2>O stronie</h2>
-			<p>i kontakt</p>
-			</a>
-		</div>
-  </div>  
+    <div id="menu">
+        <a class="graph" href="/adv/">
+        <h2>Ogłoszenia</h2>
+            <p>szukaj</p>
+            </a>
+        </div>
+        <div id="menu">
+        <a class="planning" href="{% url adv_add %}">
+            <h2>Dodaj</h2>
+            <p>ogłoszenie</p>
+        </a>
+        </div>
+        <div id="menu">
+            <a class="services" href="/panel/">
+            <h2>Twoje</h2>
+            <p>konto</p>
+            </a>
+        </div>
+        {% if user.is_authenticated  %}
+        <div id="menu">
+            <a class="projects" href="{% url logout %}">
+            <h2>Wyloguj</h2>
+            <p>się</p>
+            </a>
+        </div>
+        {% else %}
+        <div id="menu">
+            <a class="projects" href="{% url login %}">
+            <h2>Logowanie</h2>
+            <p>rejestracja</p>
+            </a>
+        </div>
+        {% endif %}
+        <div id="menu">
+            <a class="info" href="{% url about %}">
+    <h2>O stronie</h2>
+            <p>i kontakt</p>
+            </a>
+        </div>
+  </div>
 </div>
 

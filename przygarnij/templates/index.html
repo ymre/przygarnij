@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Wymiana roślinek :)</h2>
+    <p> Masz dużo roślinek, rozmnożyły Ci się paprotki, znudził kaktus? Tu możesz znaleźć ludzi z którymi zamienisz nudnego kaktusa na palmę lub koszyk bratków.</p>
+
+<h3>Jak to działa:</h3>
+<ol>
+    <li>Rejestrujesz się (za darmo)</li>
+    <li>Dodajesz ogłoszenie</li>
+    <li>Otrzymujesz maile od zainteresowanych wymianą osób</li>
+</ol>
+
+{% if lista %}
+<h3>Najnowsze ogłoszenia:</h3>
+<table class="dwa">
+    <tr><th>Ogłoszenie</th><th>Miasto</th><th>Dodane</th></tr>
+    {% for adv in lista %}
+    <tr>
+        <td class="{% cycle 'row1' 'row2' as rowcolors %}">
+            <a href={{ adv.get_absolute_url }}>{{ adv.title }}</a></td>
+        <td class="{{ rowcolors }}">{{ adv.city }}</td>
+        <td class="{{ rowcolors }}">{{ adv.add_time|date:"d-m-y" }}</td></tr>
+    </tr>
+    {%endfor%}
+
+</table>
+
+    <p class="more"><a href="/adv/">więcej</a></p>
+{% endif %}
+
+{% endblock %}
