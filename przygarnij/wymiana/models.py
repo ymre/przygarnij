@@ -20,8 +20,8 @@ class Advert(models.Model):
 
     class Meta:
         ordering = ['-add_time']
-        verbose_name = 'Ogłoszenie'
-        verbose_name_plural = 'Ogłoszenia'
+        verbose_name = u'Ogłoszenie'
+        verbose_name_plural = u'Ogłoszenia'
 
     def __unicode__(self):
         return u'%s' % (self.title)

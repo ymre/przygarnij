@@ -1,0 +1,95 @@
+[
+ {
+  "pk": 1,
+  "model": "auth.user",
+  "fields": {
+   "username": "admin",
+   "first_name": "",
+   "last_name": "",
+   "is_active": true,
+   "is_superuser": true,
+   "is_staff": true,
+   "last_login": "2012-03-06 22:53:35",
+   "groups": [],
+   "user_permissions": [],
+   "password": "sha1$76cfc$e9601b9f66469fc0b58f21f2262e621412e67609",
+   "email": "asd@asd.pl",
+   "date_joined": "2012-03-06 22:51:28"
+  }
+ },
+ {
+  "pk": 2,
+  "model": "auth.user",
+  "fields": {
+   "username": "franek",
+   "first_name": "",
+   "last_name": "",
+   "is_active": true,
+   "is_superuser": false,
+   "is_staff": false,
+   "last_login": "2012-03-06 22:52:15",
+   "groups": [],
+   "user_permissions": [],
+   "password": "sha1$3428c$7b325c6e2dc04d120bb528f59acb64727efb030b",
+   "email": "fr@an.ek",
+   "date_joined": "2012-03-06 22:52:08"
+  }
+ },
+ {
+  "pk": 3,
+  "model": "auth.user",
+  "fields": {
+   "username": "zosia",
+   "first_name": "",
+   "last_name": "",
+   "is_active": true,
+   "is_superuser": false,
+   "is_staff": false,
+   "last_login": "2012-03-06 22:54:15",
+   "groups": [],
+   "user_permissions": [],
+   "password": "sha1$57348$897c4c39bbd53c4ac732ba6b5fa3d96d42aaa059",
+   "email": "zo@si.aa",
+   "date_joined": "2012-03-06 22:54:02"
+  }
+ },
+ {
+  "pk": 3,
+  "model": "wymiana.advert",
+  "fields": {
+   "city": "krak\u00f3w",
+   "what": "nic wam nie dam",
+   "enable": true,
+   "title": "bukiet r\u00f3z bym chcia\u0142a",
+   "user": 3,
+   "what_for": "chce r\u00f3\u017ce na dole i na g\u00f3rze",
+   "add_time": "2012-03-06 22:55:05"
+  }
+ },
+ {
+  "pk": 2,
+  "model": "wymiana.advert",
+  "fields": {
+   "city": "",
+   "what": "przecie\u017c wida\u0107 ze palme!",
+   "enable": true,
+   "title": "palma daktylowa",
+   "user": 2,
+   "what_for": "kaktusa",
+   "add_time": "2012-03-06 22:53:19"
+  }
+ },
+ {
+  "pk": 1,
+  "model": "wymiana.advert",
+  "fields": {
+   "city": "szczebrzeszyn",
+   "what": "paprotka skalna rozmiaru 3x3m",
+   "enable": true,
+   "title": "paprotka",
+   "user": 2,
+   "what_for": "",
+   "add_time": "2012-03-06 22:52:48"
+  }
+ }
+]
