@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Wyszukiwanie</h3>
+<table>
+    <form action="." method="get">
+    <tr>
+        <td>{{ form.what }} </td>
+        <td>{{ form.where }} </td>
+        <td> <input type="submit" class="botton" value="Szukaj"></td>
+        <td><a href="{% url adv_list %}">wyczyść wyszukiwanie</a></td>
+    </tr>
+    <tr> {{ form.what.errors }} </tr>
+</table>
+
+
+<h2>{{ label }}</h2>
+
+{% if adv_list %}
+    <table class="dwa">
+    <tr>
+        <th><a class="tab" href="?ord={{ nu }}{% if what and where %}&what={{ what }}&where={{ where }}{% endif %}">Ogłoszenie</a></th>
+        <th><a class="tab" href="?ord={{ cu }}{% if what and where %}&what={{ what }}&where={{ where }}{% endif %}">Miasto</a></th>
+        <th><a class="tab" href="?ord={{ tu }}{% if what and where %}&what={{ what }}&where={{ where }}{% endif %}">Dodane</a></th>
+    </tr>
+    {% for adv in adv_list %}
+        <tr>
+            <td class="{% cycle 'row1' 'row2' as rowcolors %}"><a href={{ adv.get_absolute_url }}>{{ adv.title }}</a> </td>
+            <td class="{{ rowcolors }}">{{ adv.city }}</td>
+            <td class="{{ rowcolors }}">{{ adv.add_time|date:"d-m-y" }}</td>
+        </tr>
+    {%endfor%}
+    </table>
+
+    </br></br>
+    {{ adv_page.render}}
+
+{% else %}
+    Brak ogłoszeń spełniających zadane kryteria.
+{% endif %}
+
+{% endblock %}

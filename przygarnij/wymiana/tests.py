@@ -53,6 +53,23 @@ class ViewTest(TestCase):
         self.assertEqual(adv.user, User.objects.get(username='franek'))
         self.assertEqual(adv.enable, True)
 
+    def test_adv_list(self):
+        resp = self.client.get(reverse('adv_list'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual([adv.pk for adv in resp.context['adv_list']], [3, 2, 1])
+
+        resp = self.client.get(reverse('adv_list'), {'what': 'a', 'where': 'all'})
+        self.assertEqual(resp.context['form']['what'].errors,
+                ['Ensure this value has at least 3 characters (it has 1).'])
+
+        resp = self.client.get(reverse('adv_list'),
+                {'what': 'aaaaa', 'where': 'all'})
+        self.assertContains(resp, 'Brak ogłoszeń spełniających zadane kryteria.')
+
+        resp = self.client.get(reverse('adv_list'), {'page': 'asd'})
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual([adv.pk for adv in resp.context['adv_list']], [3, 2, 1])
+
     def test_about(self):
         resp = self.client.get(reverse('about'))
         self.assertEqual(resp.status_code, 200)

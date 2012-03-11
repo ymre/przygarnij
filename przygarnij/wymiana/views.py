@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.db.models import Q
+
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from models import *
 from forms import *
@@ -54,3 +57,61 @@ def adv_add(request):
 
     return render(request, 'adv_add.html', locals())
 
+
+def adv_list(request):
+
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        page = 1
+
+    ordering = {
+            'cu': 'city',
+            'cd': '-city',
+            'nu': 'title',
+            'nd': '-title',
+            'tu': 'add_time',
+            'td': '-add_time',
+        }
+    nu, cu, tu = 'nu', 'cu', 'tu'
+    what, where = '', ''
+
+    ord_get = request.GET.get('ord', 'td')
+    order = ordering.get(ord_get, '-add_time')
+
+    if ord_get == 'cu':
+        cu = 'cd'
+    elif ord_get == 'nu':
+        nu = 'nd'
+    elif ord_get == 'tu':
+        tu = 'td'
+
+    adv_list = Advert.objects.filter(enable=True)
+
+    form = SearchForm(request.GET)
+
+    if form.is_valid():
+        f = form.cleaned_data
+        what = f.get('what')
+        where = f.get('where')
+
+        if where == 'title':
+            adv_list = adv_list.filter(title__contains=what)
+        elif where == 'city':
+            adv_list = adv_list.filter(city__contains=what)
+        elif where == 'what':
+            adv_list = adv_list.filter(Q(what__contains=what) | \
+                    Q(what_for__contains=what))
+        elif where == 'all':
+            adv_list = adv_list.filter(Q(what__contains=what) | \
+                    Q(what_for__contains=what) | \
+                    Q(city__contains=what) | \
+                    Q(title__contains=what))
+
+    adv_list = adv_list.order_by(order)
+
+    p = Paginator(adv_list, 10, request=request)
+    adv_page = p.page(page)
+    adv_list = adv_page.object_list
+
+    return render(request, 'adv_list.html', locals())
