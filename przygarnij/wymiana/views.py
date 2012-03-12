@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, render, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -26,7 +26,7 @@ class AdvertView(DetailView):
 
 class AdvertAddView(FormView):
     template_name = 'adv_add.html'
-    form_class = AddAdvertForm
+    form_class = AdvertForm
     #success_url = reverse('index')
 
     def form_valid(self, form):
@@ -41,10 +41,27 @@ class AdvertAddView(FormView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+class AdvertEditView(UpdateView):
+    template_name = 'adv_edit.html'
+    form_class = AdvertForm
+    model = Advert
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.save()
+        return HttpResponseRedirect(reverse('adv', args=[self.object.pk]))
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk', None)
+        return Advert.objects.filter(pk=pk, user=self.request.user)
+
 @login_required
 def adv_add(request):
     if request.method == 'POST':
-        form = AddAdvertForm(request.POST)
+        form = AdvertForm(request.POST)
 
         if form.is_valid():
             adv = form.save(commit=False)
@@ -53,7 +70,7 @@ def adv_add(request):
             adv.save()
             return HttpResponseRedirect(reverse('index'))
     else:
-        form = AddAdvertForm()
+        form = AdvertForm()
 
     return render(request, 'adv_add.html', locals())
 

@@ -53,6 +53,30 @@ class ViewTest(TestCase):
         self.assertEqual(adv.user, User.objects.get(username='franek'))
         self.assertEqual(adv.enable, True)
 
+    def test_adv_edit(self):
+        resp = self.client.get(reverse('adv_edit', args=[1]))
+        self.assertEqual(resp.status_code, 302)
+
+        self.login()
+        resp = self.client.get(reverse('adv_edit', args=[1]))
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.get(reverse('adv_edit', args=[100]))
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.client.post(reverse('adv_edit', args=[1]),
+                {'title': 'zmiana', 'what': ''})
+        self.assertEqual(resp.context['form']['what'].errors,
+                ['This field is required.'])
+
+        adv = Advert.objects.all().count()
+        resp = self.client.post(reverse('adv_edit', args=[1]),
+                {'title': 'zmiana', 'what': 'kaktus'})
+        self.assertRedirects(resp, reverse('adv', args=[1]), status_code=302,
+                target_status_code=200)
+        self.assertEqual(Advert.objects.get(pk=1).title, 'zmiana')
+        self.assertEqual(adv, Advert.objects.all().count())
+
     def test_adv_list(self):
         resp = self.client.get(reverse('adv_list'))
         self.assertEqual(resp.status_code, 200)
