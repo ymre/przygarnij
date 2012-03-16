@@ -10,3 +10,9 @@ class AdvertAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 admin.site.register(Advert, AdvertAdmin)
+
+class PhotoAdmin(admin.ModelAdmin):
+    list_display = ('adv', 'image')
+
+admin.site.register(Photo, PhotoAdmin)
+

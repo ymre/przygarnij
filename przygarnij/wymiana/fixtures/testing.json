@@ -91,5 +91,29 @@
    "what_for": "",
    "add_time": "2012-03-06 22:52:48"
   }
+ },
+ {
+  "pk": 1,
+  "model": "wymiana.photo",
+  "fields": {
+   "adv": 1,
+   "image": "1.jpg"
+  }
+ },
+ {
+  "pk": 2,
+  "model": "wymiana.photo",
+  "fields": {
+   "adv": 2,
+   "image": "2.jpg"
+  }
+ },
+ {
+  "pk": 3,
+  "model": "wymiana.photo",
+  "fields": {
+   "adv": 2,
+   "image": "3.jpg"
+  }
  }
 ]

@@ -12,8 +12,12 @@
         <p><Span>Za co:</Span>{{ adv.what_for|linebreaks }}</p>
     {% endif %}
 
+{% for photo in photo_list %}
+    <a class="dwa" href="{{ MEDIA_URL }}{{ photo.image.name}}"><img alt="" src="{{ MEDIA_URL }}{{ photo.image.name }}" /></a>
+{% endfor %}
+
 {% if adv.user == user %}
-    <p class="more"><a href="/adv/{{ adv.id }}/edit">edytuj</a></p>
+<p class="more"><a href="{% url adv_edit adv.id %}">edytuj</a></p>
 {% else %}
     {% if adv.enable %}
         <p class="more"><a href="/adv/{{ adv.id }}/ans">odpisz</a></p>

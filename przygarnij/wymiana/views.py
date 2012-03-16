@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.forms.models import modelformset_factory
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
@@ -23,22 +24,10 @@ class AdvertView(DetailView):
     context_object_name = 'adv'
     model = Advert
 
-
-class AdvertAddView(FormView):
-    template_name = 'adv_add.html'
-    form_class = AdvertForm
-    #success_url = reverse('index')
-
-    def form_valid(self, form):
-        adv = form.save(commit=False)
-        adv.user = self.request.user
-        adv.enable = True
-        adv.save()
-        return HttpResponseRedirect(reverse('index'))
-        #return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form))
+    def get_context_data(self, **kwargs):
+        context = super(AdvertView, self).get_context_data(**kwargs)
+        context['photo_list'] = Photo.objects.filter(adv=self.object.pk)
+        return context
 
 
 class AdvertEditView(UpdateView):
@@ -47,9 +36,18 @@ class AdvertEditView(UpdateView):
     model = Advert
 
     def form_valid(self, form):
-        self.object = form.save()
-        self.object.save()
-        return HttpResponseRedirect(reverse('adv', args=[self.object.pk]))
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
+            self.object = form.save()
+            self.object.save()
+            photos = formset.save(commit=False)
+            for photo in photos:
+                photo.adv = self.object
+                photo.save()
+            return HttpResponseRedirect(reverse('adv', args=[self.object.pk]))
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
@@ -58,25 +56,48 @@ class AdvertEditView(UpdateView):
         pk = self.kwargs.get('pk', None)
         return Advert.objects.filter(pk=pk, user=self.request.user)
 
-@login_required
-def adv_add(request):
-    if request.method == 'POST':
-        form = AdvertForm(request.POST)
+    def get_context_data(self, **kwargs):
+        context = super(AdvertEditView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = PhotoEditFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['formset'] = PhotoEditFormSet(queryset=Photo.objects.filter(adv=self.object.pk))
+        return context
 
-        if form.is_valid():
+
+class AdvertAddView(FormView):
+    template_name = 'adv_add.html'
+    form_class = AdvertForm
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
             adv = form.save(commit=False)
-            adv.user = request.user
+            adv.user = self.request.user
             adv.enable = True
             adv.save()
+            photos = formset.save(commit=False)
+            for photo in photos:
+                photo.adv = adv
+                photo.save()
             return HttpResponseRedirect(reverse('index'))
-    else:
-        form = AdvertForm()
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
-    return render(request, 'adv_add.html', locals())
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_context_data(self, **kwargs):
+        context = super(AdvertAddView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = PhotoAddFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['formset'] = PhotoAddFormSet(queryset=Photo.objects.none())
+        return context
 
 
 def adv_list(request):
-
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:

@@ -2,6 +2,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from models import *
+from django.forms.models import modelformset_factory
+
+PhotoAddFormSet = modelformset_factory(Photo, fields=('image',), extra=5, max_num=5)
+PhotoEditFormSet = modelformset_factory(Photo, fields=('image',), extra=5, max_num=5, can_delete=True)
 
 
 class AdvertForm(forms.ModelForm):
