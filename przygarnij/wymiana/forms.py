@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from models import *
 from django.forms.models import modelformset_factory
+from captcha.fields import CaptchaField
 
 PhotoAddFormSet = modelformset_factory(Photo, fields=('image',), extra=5, max_num=5)
 PhotoEditFormSet = modelformset_factory(Photo, fields=('image',), extra=5, max_num=5, can_delete=True)
@@ -14,9 +15,29 @@ class AdvertForm(forms.ModelForm):
         fields = ('title', 'city', 'what', 'what_for')
 
 
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ('message',)
+
+
+class AnonymousAnswerForm(forms.ModelForm):
+    captcha = CaptchaField()
+
+    class Meta:
+        model = Answer
+        fields = ('email', 'message')
+
+    def __init__(self, *args, **kwargs):
+        super(AnonymousAnswerForm, self).__init__(*args, **kwargs)
+
+        for key in ['email']:
+            self.fields[key].required = True
+
+
 class SearchForm(forms.Form):
-	what = forms.CharField(min_length=3, max_length=20, label='o_O', required=False)
-	where = forms.ChoiceField(
+    what = forms.CharField(min_length=3, max_length=20, label='o_O', required=False)
+    where = forms.ChoiceField(
             widget=forms.Select(),
             choices=([
                 ('all', u'wszędzie'),

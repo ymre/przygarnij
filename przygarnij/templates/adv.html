@@ -21,7 +21,7 @@
     <p class="more"><a href="{% url adv_edit adv.id %}">edytuj</a></p>
 {% else %}
     {% if adv.enable %}
-        <p class="more"><a href="/adv/{{ adv.id }}/ans">odpisz</a></p>
+    <p class="more"><a href="{% url adv_ans adv.id %}">odpisz</a></p>
     {% else %}
         <p><i>Ogłoszenie archiwalne</i></p>
     {% endif %}

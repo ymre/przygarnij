@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
+from django.core import mail
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
@@ -188,6 +189,77 @@ class ViewTest(TestCase):
         resp = self.client.get(reverse('adv_list'), {'page': 'asd'})
         self.assertEqual(resp.status_code, 200)
         self.assertEqual([adv.pk for adv in resp.context['adv_list']], [3, 2, 1])
+
+    def test_adv_ans_basic(self):
+        resp = self.client.get(reverse('adv_ans', args=[1]))
+        self.assertContains(resp, 'Captcha')
+
+        resp = self.client.get(reverse('adv_ans', args=[999]))
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.client.post(reverse('adv_ans', args=[1]), {})
+        fields = ['message', 'email', 'captcha']
+        for f in fields:
+            self.assertEqual(resp.context['form'][f].errors,
+                    ['This field is required.'])
+
+        self.login()
+
+        resp = self.client.get(reverse('adv_ans', args=[1]))
+        self.assertNotContains(resp, 'Captcha')
+
+        resp = self.client.post(reverse('adv_ans', args=[1]), {})
+        self.assertEqual(resp.context['form']['message'].errors,
+                ['This field is required.'])
+
+    def answer_mail(self, ans, outbox, mes):
+        self.assertEqual(len(outbox), 1)
+        self.assertTrue(mes in outbox[0].body)
+        self.assertEqual([ans.adv.user.email], outbox[0].to)
+        self.assertEqual(u'Odpowiedź na ogłoszenie: {0}'.format(ans.adv.title),
+                outbox[0].subject)
+        self.assertEqual('przygarnijkwiatka@gmail.com', outbox[0].from_email)
+        self.assertEqual(ans.email, outbox[0].extra_headers['Reply-To'])
+
+    def test_adv_ans(self):
+        self.login(user='zosia', password='asdasd')
+        mes = 'bla bla bla'
+
+        mail.outbox = []
+        resp = self.client.post(reverse('adv_ans', args=[1]),
+                {'message': mes})
+        self.assertRedirects(resp, reverse('index'), status_code=302,
+                target_status_code=200)
+        ans = Answer.objects.all().latest('pk')
+
+        self.answer_mail(ans=ans, outbox=mail.outbox, mes=mes)
+
+    def test_adv_ans_anon(self):
+        from captcha.models import CaptchaStore
+
+        captcha_count = CaptchaStore.objects.count()
+        self.failUnlessEqual(captcha_count, 0)
+
+        resp = self.client.get(reverse('adv_ans', args=[1]))
+
+        captcha_count = CaptchaStore.objects.count()
+        self.failUnlessEqual(captcha_count, 1)
+
+        captcha = CaptchaStore.objects.all()[0]
+
+        mes = 'bla bla bla'
+        resp = self.client.post(reverse('adv_ans', args=[1]),
+                {
+                    'message': mes,
+                    'email': 'test@test.pl',
+                    'captcha_0': captcha.hashkey,
+                    'captcha_1': captcha.response
+                })
+        self.assertRedirects(resp, reverse('index'), status_code=302,
+                target_status_code=200)
+
+        ans = Answer.objects.all().latest('pk')
+        self.answer_mail(ans=ans, outbox=mail.outbox, mes=mes)
 
     def test_about(self):
         resp = self.client.get(reverse('about'))

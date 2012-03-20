@@ -16,3 +16,7 @@ class PhotoAdmin(admin.ModelAdmin):
 
 admin.site.register(Photo, PhotoAdmin)
 
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('adv', 'user', 'email', 'date')
+
+admin.site.register(Answer, AnswerAdmin)

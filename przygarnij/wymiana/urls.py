@@ -7,6 +7,7 @@ from views import *
 urlpatterns = patterns('',
     url(r'^$', AdvertIndexView.as_view(), name='index'),
     url(r'^adv/add/$', login_required(AdvertAddView.as_view()), name='adv_add'),
+    url(r'^adv/ans/(?P<pk>\d+)/$', AnswerView.as_view(), name='adv_ans'),
     url(r'^adv/edit/(?P<pk>\d+)/$', login_required(AdvertEditView.as_view()), name='adv_edit'),
     url(r'^adv/$', 'wymiana.views.adv_list', name='adv_list'),
     url(r'^adv/(?P<pk>\d+)/$', AdvertView.as_view(), name='adv'),

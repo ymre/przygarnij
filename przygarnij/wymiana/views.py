@@ -6,6 +6,9 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.forms.models import modelformset_factory
+from django.core.mail import send_mail, EmailMessage
+from django.template.loader import render_to_string
+
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
@@ -27,6 +30,46 @@ class AdvertView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(AdvertView, self).get_context_data(**kwargs)
         context['photo_list'] = Photo.objects.filter(adv=self.object.pk)
+        return context
+
+
+class AnswerView(FormView):
+    template_name = 'adv_ans.html'
+    form_class = Answer
+
+    def get_form_class(self):
+        if self.request.user.is_authenticated():
+            return AnswerForm
+        return AnonymousAnswerForm
+
+    def form_valid(self, form):
+        adv = get_object_or_404(Advert, pk=self.kwargs.get('pk', None))
+
+        ans = form.save(commit=False)
+        if self.request.user.is_authenticated():
+            ans.user = self.request.user
+            ans.email = ans.user.email
+        ans.adv = adv
+        ans.save()
+
+        mail = EmailMessage(
+            subject=unicode(u'Odpowiedź na ogłoszenie: {0}'.format(adv.title)),
+            body=render_to_string('ans.html', locals()),
+            from_email='przygarnijkwiatka@gmail.com',
+            bcc=['jaka_paralela@tlen.pl'],
+            to=[adv.user.email],
+            headers={'Reply-To': ans.email, 'Content-type': 'text/html; charset=UTF-8'}
+        )
+        mail.send()
+
+        return HttpResponseRedirect(reverse('index'))
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_context_data(self, **kwargs):
+        context = super(AnswerView, self).get_context_data(**kwargs)
+        context['advert'] = get_object_or_404(Advert, pk=self.kwargs.get('pk', None), enable=True)
         return context
 
 

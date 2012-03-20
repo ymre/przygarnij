@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Odpowiedź na ogłoszenie: {{ advert.title }} </h3>
+<form enctype="multipart/form-data" action="." method="post">{% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+<input type="submit" class="botton" value="Wyślij">
+
+</form>
+
+{% endblock %}

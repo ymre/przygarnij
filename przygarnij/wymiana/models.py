@@ -30,6 +30,19 @@ class Advert(models.Model):
         return reverse('adv', args=[self.id])
 
 
+class Answer(models.Model):
+    adv = models.ForeignKey(Advert)
+    user = models.ForeignKey(User, blank=True, null=True)
+    email = models.EmailField(u'e-mail', blank=True, null=True)
+    message = models.TextField(u'wiadomość')
+    date = models.DateTimeField('data wysłania', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date']
+        verbose_name = u'Odpowiedź'
+        verbose_name_plural = u'Odpowiedzi'
+
+
 class Photo(models.Model):
     adv = models.ForeignKey(Advert)
     image = models.ImageField(u'zdjęcie', upload_to=".")
