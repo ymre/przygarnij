@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.forms.models import modelformset_factory
 from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
+from django.http import Http404
 
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -22,10 +23,23 @@ class AdvertIndexView(ListView):
     queryset = Advert.objects.filter(enable=True)[:5]
 
 
+class PanelView(ListView):
+    template_name = 'panel.html'
+    context_object_name = 'lista'
+
+    def get_queryset(self):
+        adv = Advert.objects.filter(user=self.request.user, enable=True)
+        return adv
+
+
 class AdvertView(DetailView):
     template_name = 'adv.html'
     context_object_name = 'adv'
     model = Advert
+
+    def get_queryset(self):
+        adv = Advert.objects.filter(enable=True)
+        return adv
 
     def get_context_data(self, **kwargs):
         context = super(AdvertView, self).get_context_data(**kwargs)
@@ -138,6 +152,25 @@ class AdvertAddView(FormView):
         else:
             context['formset'] = PhotoAddFormSet(queryset=Photo.objects.none())
         return context
+
+
+@login_required
+def adv_delete(request, pk):
+    adv = get_object_or_404(
+        Advert,
+        user=request.user,
+        pk=pk
+    )
+
+    if request.method == 'POST':
+        adv_pk = request.POST.get('pk')
+        if adv_pk != pk:
+            raise Http404
+        adv.enable = False
+        adv.save()
+        return HttpResponseRedirect(reverse('profile'))
+
+    return render(request, 'adv_del.html', locals())
 
 
 def adv_list(request):

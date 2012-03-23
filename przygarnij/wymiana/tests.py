@@ -261,6 +261,43 @@ class ViewTest(TestCase):
         ans = Answer.objects.all().latest('pk')
         self.answer_mail(ans=ans, outbox=mail.outbox, mes=mes)
 
+    def test_adv_delete_basic(self):
+        resp = self.client.get(reverse('adv_del', args=[1]))
+        self.assertRedirects(resp, reverse('login') + '?next=/adv/del/1/',
+                status_code=302, target_status_code=200)
+
+        self.login(user='zosia', password='asdasd')
+
+        resp = self.client.get(reverse('adv_del', args=[0]))
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.client.get(reverse('adv_del', args=[1]))
+        self.assertEqual(resp.status_code, 404)
+
+    def test_adv_delete(self):
+        self.login()
+
+        resp = self.client.get(reverse('adv_del', args=[1]))
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.post(reverse('adv_del', args=[1]))
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.client.post(reverse('adv_del', args=[1]), {'pk': 1})
+        self.assertRedirects(resp, reverse('profile'), status_code=302,
+                target_status_code=200)
+        self.assertFalse(Advert.objects.get(pk=1).enable)
+
+    def test_panel(self):
+        resp = self.client.get(reverse('profile'))
+        self.assertRedirects(resp, reverse('login') + '?next=/profile/',
+                status_code=302, target_status_code=200)
+
+        self.login()
+        resp = self.client.get(reverse('profile'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual([a.pk for a in resp.context['lista']], [2, 1])
+
     def test_about(self):
         resp = self.client.get(reverse('about'))
         self.assertEqual(resp.status_code, 200)

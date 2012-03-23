@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Witaj {{ request.user }}</h2>
+W panelu możesz edytować swoje ogłoszenia, dodawać i usuwać zdjęcia, oraz oznaczać już nieaktualne ogłoszenia. <br>
+<h5><a class="dwa" href="{% url pass_change %}">zmiana hasła</a></h5>
+
+{% if lista %}
+<h3>Twoje aktywne ogłoszenia</h3>
+<table class="dwa">
+    <tr><th>Nr</th><th>Tytuł ogłoszenia</th><th>Data dodania</th><th>Opcje</th></tr>
+    {% for adv in lista %}
+        <tr>
+            <td class="{% cycle 'row1' 'row2' as rowcolors %}">{{ adv.pk }}</td>
+            <td class="{{ rowcolors }}"><a href={% url adv adv.pk %}>{{ adv.title }}</a></td>
+            <td class="{{ rowcolors }}">{{ adv.add_time|date:"d-m-y H:i" }}</td>
+            <td class="{{ rowcolors }}"><a href="{% url adv_edit adv.pk %}"> edytuj </a> -
+                <a href="{% url adv_del adv.pk %}"> usuń </a>
+        </tr>
+    {%endfor%}
+</table>
+{% else %}
+<p> Nie masz żadnych ogłoszeń. <a href="{% url adv_add %}">Dodaj ogłoszenie.</a></p>
+{% endif %}
+{% endblock %}

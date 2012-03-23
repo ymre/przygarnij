@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Czy napewno chcesz usunąć ogloszenie: {{ adv.title }}</h3>
+    <p><Span>Co:</Span> {{ adv.what|linebreaks }}</p>
+
+    {% if adv.what_for %}
+        <p><Span>Za co:</Span>{{ adv.what_for|linebreaks }}</p>
+    {% endif %}
+
+
+    <form action="" method="post">{% csrf_token %}
+        <input type="hidden" name="pk" value={{ adv.pk }} />
+        <input type="submit" class="botton" value="Usuń">
+	</form>
+
+{% endblock %}
