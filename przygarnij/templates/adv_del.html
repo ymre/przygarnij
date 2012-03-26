@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Czy napewno chcesz usunąć ogloszenie: {{ adv.title }}</h3>
+<h1>Czy napewno chcesz usunąć ogloszenie: {{ adv.title }}</h1>
     <p><Span>Co:</Span> {{ adv.what|linebreaks }}</p>
 
     {% if adv.what_for %}

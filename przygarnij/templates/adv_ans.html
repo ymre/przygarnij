@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Odpowiedź na ogłoszenie: {{ advert.title }} </h3>
+<p class="left"><span>Odpowiedź na ogłoszenie: </span></p>
+<div style="clear: both"></div>
+
+<h1>{{ advert.title }} </h1>
+
 <form enctype="multipart/form-data" action="." method="post">{% csrf_token %}
     <table>
         {{ form }}

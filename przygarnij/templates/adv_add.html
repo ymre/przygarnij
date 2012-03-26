@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Nowe ogłoszenie</h3>
+<h1>Nowe ogłoszenie</h1>
 <form enctype="multipart/form-data" action="." method="post">{% csrf_token %}
     <table>
         {{ form }}

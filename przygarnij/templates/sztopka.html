@@ -2,12 +2,11 @@
 <div id="footermainPan">
   <div id="footerPan">
   	<ul>
-		<li><a href="/">Home</a>| </li>
-		<li><a href="/adv/">Ogłoszenia</a>| </li>
-		<li><a href="/adv/arch/">Archiwalne</a>| </li>
-		<li><a href="/panel/">Panel</a>| </li>
-		<li><a href="/userlist/">Użytkownicy</a>|</li>
-		<li><a href="/about/">O stronie</a></li>
+		<li><a href="{% url index %}">Home</a>| </li>
+		<li><a href="{% url adv_list %}">Ogłoszenia</a>| </li>
+		<li><a href="{% url profile %}">Panel</a>| </li>
+		<li><a href="{% url index %}">Użytkownicy</a>|</li>
+		<li><a href="{% url about %}">O stronie</a></li>
 		</ul>
   	<ul class="templateworld">
 		<li>&copy; 2011 Anna Sośnicka-Cieśla (sosna) | design by:<a href="http://www.templateworld.com">Template World</a></li>

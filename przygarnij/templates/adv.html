@@ -3,14 +3,22 @@
 {% block content %}
 
 
-<h3>[{{ adv.id }}]  {{ adv.title }} </h3>
+<h1>{{ adv.title }}</h1>
 
-    <p><span>Autor:</span> <a href="/userpage/{{ adv.user }}">{{ adv.user }}</a>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <span> Miasto: </span> {{ adv.city }} &nbsp; &nbsp;<span>Dodano: </span> {{ adv.add_time|date:"d-m-y"  }} </p>
+<div style="clear: both"></div>
+<p class="right"><span>Autor:</span><a href="/userpage/{{ adv.user }}">{{ adv.user }}</a></p>
+<div style="clear: both"></div>
+<p class="left"><span> Miasto: </span> {{ adv.city }}</p>
+<p class="right"><span>Dodano: </span> {{ adv.add_time|date:"d-m-y" }}</p>
+    </br>
+    <hr>
 
     <p><Span>Co:</Span> {{ adv.what|linebreaks }}</p>
+    </br>
 
     {% if adv.what_for %}
         <p><Span>Za co:</Span>{{ adv.what_for|linebreaks }}</p>
+        </br>
     {% endif %}
 
 {% for photo in photo_list %}
