@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^adv/(?P<pk>\d+)/$', AdvertView.as_view(), name='adv'),
     url(r'^profile/$', login_required(PanelView.as_view()), name='profile'),
     url(r'^profile/info/$', login_required(InfoFormView.as_view()), name='info'),
+    url(r'^user/(?P<username>\w+)/$', UserView.as_view(), name='user'),
     url(r'^about/$', TemplateView.as_view(template_name="about.html"), name='about'),
 )

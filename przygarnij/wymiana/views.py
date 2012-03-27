@@ -37,6 +37,23 @@ class PanelView(ListView):
         return context
 
 
+class UserView(ListView):
+    template_name = 'user.html'
+    context_object_name = 'lista'
+
+    def get_queryset(self):
+        user = get_object_or_404(User,
+                username=self.kwargs.get('username', None))
+        return Advert.objects.filter(user=user, enable=True)
+
+    def get_context_data(self, **kwargs):
+        user = get_object_or_404(User,
+                username=self.kwargs.get('username', None))
+        context = super(UserView, self).get_context_data(**kwargs)
+        context['info'] = UserInfo.objects.filter(user=user)
+        return context
+
+
 class AdvertView(DetailView):
     template_name = 'adv.html'
     context_object_name = 'adv'

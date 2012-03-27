@@ -6,7 +6,7 @@
 <h1>{{ adv.title }}</h1>
 
 <div style="clear: both"></div>
-<p class="right"><span>Autor:</span><a href="/userpage/{{ adv.user }}">{{ adv.user }}</a></p>
+<p class="right"><span>Autor:</span><a href="{% url user adv.user %}">{{ adv.user }}</a></p>
 <div style="clear: both"></div>
 <p class="left"><span> Miasto: </span> {{ adv.city }}</p>
 <p class="right"><span>Dodano: </span> {{ adv.add_time|date:"d-m-y" }}</p>

@@ -310,6 +310,21 @@ class ViewTest(TestCase):
             self.assertContains(resp, info)
         self.assertEqual(info_num + 1, UserInfo.objects.all().count())
 
+    def test_userpage(self):
+        info = UserInfo.objects.create(
+                user=User.objects.get(username='franek'),
+                info='bla bla bla'
+            )
+        info.save()
+
+        resp = self.client.get(reverse('user', args=['nie_ma_mnie']))
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.client.get(reverse('user', args=['franek']))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual([a.pk for a in resp.context['lista']], [2, 1])
+        self.assertEqual(resp.context['info'][0], info)
+
     def test_about(self):
         resp = self.client.get(reverse('about'))
         self.assertEqual(resp.status_code, 200)

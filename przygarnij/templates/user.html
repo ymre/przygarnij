@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>{{ user }}</h2>
+
+{% if info %}
+	{{ info.0.info|linebreaks }}
+	{% else %}
+	Brak informacji o użytkowniku.
+{% endif %}
+</br>
+</br>
+
+{% if lista %}
+<h1>Aktualne ogłoszenia</h1>
+<table class="dwa">
+    <tr><th>Nr</th><th>Tytuł ogłoszenia</th><th>Data dodania</th></tr>
+    {% for adv in lista %}
+        <tr>
+            <td class="{% cycle 'row1' 'row2' as rowcolors %}">{{ adv.pk }}</td>
+            <td class="{{ rowcolors }}"><a href={% url adv adv.pk %}>{{ adv.title }}</a></td>
+            <td class="{{ rowcolors }}">{{ adv.add_time|date:"d-m-y H:i" }}</td>
+        </tr>
+    {%endfor%}
+</table>
+{% else %}
+<p> Brak ogłoszeń.</p>
+{% endif %}
+{% endblock %}
