@@ -16,6 +16,18 @@ TESTS_DIR = os.path.dirname(__file__)
 class ViewTest(TestCase):
     fixtures = ['testing.json']
 
+    def check_login_required(self, url):
+        resp = self.client.get(url)
+        self.assertRedirects(
+                resp,
+                reverse('login') + '?next={0}'.format(url),
+                status_code=302,
+                target_status_code=200
+            )
+        self.login()
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+
     def login(self, user='franek', password='asdasd'):
         self.client.login(username=user, password=password)
 
@@ -29,16 +41,11 @@ class ViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.context['adv'], Advert.objects.get(pk=3))
 
-        resp = self.client.get(reverse('adv', args=[99]))
+        resp = self.client.get(reverse('adv', args=[0]))
         self.assertEqual(resp.status_code, 404)
 
     def test_adv_add_basic(self):
-        resp = self.client.get(reverse('adv_add'))
-        self.assertEqual(resp.status_code, 302)
-
-        self.login()
-        resp = self.client.get(reverse('adv_add'))
-        self.assertEqual(resp.status_code, 200)
+        self.check_login_required(reverse('adv_add'))
 
     def test_adv_add_empty_form(self):
         self.login()
@@ -104,14 +111,9 @@ class ViewTest(TestCase):
         img.close()
 
     def test_adv_edit_basic(self):
-        resp = self.client.get(reverse('adv_edit', args=[1]))
-        self.assertEqual(resp.status_code, 302)
+        self.check_login_required(reverse('adv_edit', args=[1]))
 
-        self.login()
-        resp = self.client.get(reverse('adv_edit', args=[1]))
-        self.assertEqual(resp.status_code, 200)
-
-        resp = self.client.get(reverse('adv_edit', args=[100]))
+        resp = self.client.get(reverse('adv_edit', args=[0]))
         self.assertEqual(resp.status_code, 404)
 
     def test_adv_edit_empty(self):
@@ -194,7 +196,7 @@ class ViewTest(TestCase):
         resp = self.client.get(reverse('adv_ans', args=[1]))
         self.assertContains(resp, 'Captcha')
 
-        resp = self.client.get(reverse('adv_ans', args=[999]))
+        resp = self.client.get(reverse('adv_ans', args=[0]))
         self.assertEqual(resp.status_code, 404)
 
         resp = self.client.post(reverse('adv_ans', args=[1]), {})
@@ -262,9 +264,7 @@ class ViewTest(TestCase):
         self.answer_mail(ans=ans, outbox=mail.outbox, mes=mes)
 
     def test_adv_delete_basic(self):
-        resp = self.client.get(reverse('adv_del', args=[1]))
-        self.assertRedirects(resp, reverse('login') + '?next=/adv/del/1/',
-                status_code=302, target_status_code=200)
+        self.check_login_required(reverse('adv_del', args=[1]))
 
         self.login(user='zosia', password='asdasd')
 
@@ -289,14 +289,26 @@ class ViewTest(TestCase):
         self.assertFalse(Advert.objects.get(pk=1).enable)
 
     def test_panel(self):
-        resp = self.client.get(reverse('profile'))
-        self.assertRedirects(resp, reverse('login') + '?next=/profile/',
-                status_code=302, target_status_code=200)
+        self.check_login_required(reverse('profile'))
 
         self.login()
         resp = self.client.get(reverse('profile'))
-        self.assertEqual(resp.status_code, 200)
         self.assertEqual([a.pk for a in resp.context['lista']], [2, 1])
+
+    def test_userinfo(self):
+        self.check_login_required(reverse('info'))
+
+        self.login()
+
+        info_num = UserInfo.objects.all().count()
+        for info in ['bla bla bla', 'inne blablanie']:
+            resp = self.client.post(reverse('info'), {'info': info})
+            self.assertRedirects(resp, reverse('profile'), status_code=302,
+                    target_status_code=200)
+
+            resp = self.client.get(reverse('info'))
+            self.assertContains(resp, info)
+        self.assertEqual(info_num + 1, UserInfo.objects.all().count())
 
     def test_about(self):
         resp = self.client.get(reverse('about'))

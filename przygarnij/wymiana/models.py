@@ -7,6 +7,15 @@ from django.core.urlresolvers import reverse
 from PIL import Image
 
 
+class UserInfo(models.Model):
+    user = models.OneToOneField(User)
+    info = models.TextField('informacje o Tobie', blank=True)
+
+    class Meta:
+        verbose_name = u'Info'
+        verbose_name_plural = u'Info'
+
+
 class Advert(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField('tytuł', max_length=120)

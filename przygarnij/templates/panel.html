@@ -5,6 +5,17 @@
 W panelu możesz edytować swoje ogłoszenia, dodawać i usuwać zdjęcia, oraz oznaczać już nieaktualne ogłoszenia. <br>
 <h5><a class="dwa" href="{% url pass_change %}">zmiana hasła</a></h5>
 
+<h1>Informacje o Tobie:</h1>
+{% if info %}
+	{{ info.0.info|linebreaks }}
+    <a class="dwa" href="{% url info %}">zmień</a>
+	{% else %}
+	Brak
+    <a class="dwa" href="{% url info %}">dodaj</a>
+{% endif %}
+</br>
+</br>
+
 {% if lista %}
 <h1>Twoje aktywne ogłoszenia</h1>
 <table class="dwa">

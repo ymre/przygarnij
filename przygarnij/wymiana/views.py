@@ -31,6 +31,11 @@ class PanelView(ListView):
         adv = Advert.objects.filter(user=self.request.user, enable=True)
         return adv
 
+    def get_context_data(self, **kwargs):
+        context = super(PanelView, self).get_context_data(**kwargs)
+        context['info'] = UserInfo.objects.filter(user=self.request.user)
+        return context
+
 
 class AdvertView(DetailView):
     template_name = 'adv.html'
@@ -45,6 +50,26 @@ class AdvertView(DetailView):
         context = super(AdvertView, self).get_context_data(**kwargs)
         context['photo_list'] = Photo.objects.filter(adv=self.object.pk)
         return context
+
+
+class InfoFormView(FormView):
+    template_name = 'user_info.html'
+    form_class = UserInfoForm
+
+    def form_valid(self, form):
+        info, fl = UserInfo.objects.get_or_create(user=self.request.user)
+        info.info = form.cleaned_data.get('info')
+        info.user = self.request.user
+        info.save()
+        return HttpResponseRedirect(reverse('profile'))
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_initial(self):
+        userinfo = UserInfo.objects.filter(user=self.request.user)
+        if userinfo:
+            return {'info': userinfo[0].info}
 
 
 class AnswerView(FormView):

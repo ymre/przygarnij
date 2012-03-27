@@ -9,6 +9,12 @@ PhotoAddFormSet = modelformset_factory(Photo, fields=('image',), extra=5, max_nu
 PhotoEditFormSet = modelformset_factory(Photo, fields=('image',), extra=5, max_num=5, can_delete=True)
 
 
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ('info',)
+
+
 class AdvertForm(forms.ModelForm):
     class Meta:
         model = Advert

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Edytujesz informacje o sobie</h1>
+
+<form enctype="multipart/form-data" action="." method="post">{% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+<input type="submit" class="botton" value="Zapisz">
+</form>
+
+{% endblock %}

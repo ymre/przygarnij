@@ -2,6 +2,10 @@
 from django.contrib import admin
 from models import *
 
+class InfoAdmin(admin.ModelAdmin):
+    list_display = ('user', 'info')
+admin.site.register(UserInfo, InfoAdmin)
+
 
 class AdvertAdmin(admin.ModelAdmin):
     list_display = ('user', 'title', 'city', 'add_time', 'enable')
