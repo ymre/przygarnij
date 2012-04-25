@@ -19,7 +19,7 @@ W panelu możesz edytować swoje ogłoszenia, dodawać i usuwać zdjęcia, oraz 
 {% if lista %}
 <h1>Twoje aktywne ogłoszenia</h1>
 <table class="dwa">
-    <tr><th>Nr</th><th>Tytuł ogłoszenia</th><th>Data dodania</th><th>Opcje</th></tr>
+    <tr><th>Nr</th><th>Tytuł ogłoszenia</th><th>Data dodania</th><th>Opcje</th><th>Ilość</br> wyświetleń</th></tr>
     {% for adv in lista %}
         <tr>
             <td class="{% cycle 'row1' 'row2' as rowcolors %}">{{ adv.pk }}</td>
@@ -27,6 +27,7 @@ W panelu możesz edytować swoje ogłoszenia, dodawać i usuwać zdjęcia, oraz 
             <td class="{{ rowcolors }}">{{ adv.add_time|date:"d-m-y H:i" }}</td>
             <td class="{{ rowcolors }}"><a href="{% url adv_edit adv.pk %}"> edytuj </a> -
                 <a href="{% url adv_del adv.pk %}"> usuń </a>
+            <td class="{{ rowcolors }} text_right">{{ adv.count }}</td>
         </tr>
     {%endfor%}
 </table>

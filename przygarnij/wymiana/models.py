@@ -26,6 +26,7 @@ class Advert(models.Model):
             help_text='Roślinka, którą chciałbyś dostać w zamian (opcjonalnie).')
     add_time = models.DateTimeField('data dodania', auto_now_add=True)
     enable = models.BooleanField('aktualne')
+    count = models.IntegerField(u'ilość wyświetleń', default=0)
 
     class Meta:
         ordering = ['-add_time']
@@ -37,6 +38,9 @@ class Advert(models.Model):
 
     def get_absolute_url(self):
         return reverse('adv', args=[self.id])
+
+    def count_add_one(self):
+        self.count += 1
 
 
 class Answer(models.Model):
@@ -73,7 +77,6 @@ class Photo(models.Model):
         if not self.id and not self.image:
             return
         super(Photo, self).save()
-        #super(Photo, self).save(*args, **kwargs)
         file_path = str(self.image.name)
         ext = file_path.split('.')
         ext = ext[-1]
@@ -83,7 +86,7 @@ class Photo(models.Model):
         except IOError:
             # Error? Restore original name
             new_path = file_path
-        self.image.name = new_path  # str(self.id)
+        self.image.name = new_path
         super(Photo, self).save()
 
         pw = self.image.width

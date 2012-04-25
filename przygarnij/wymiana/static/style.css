@@ -34,9 +34,11 @@ div#domek{width:778px; margin:0 auto; background:white; }
 #btleftPan{width:520px; float:left; padding:0 15px;}
 #btleftPan h2{width:400px; height:53px; background:#fff; color:#ff8700; font:30px/53px Georgia, "Times New Roman", Times, serif;}
 
-#btleftPan p.more{width:73px; height:25px; margin:0 0 0 417px; font:12px/24px Arial, Helvetica, sans-serif; font-weight:bold; text-transform:uppercase;}
-#btleftPan p.more a{width:53px; height:25px; display:block; background:url(images/rollover-nor.gif) 0 0 no-repeat #FAFAFA; color:#fff; padding:0 0 0 20px; text-decoration:none;}
-#btleftPan p.more a:hover{background:url(images/rollover-hover.gif) 0 0 no-repeat #FAFAFA; color:#A67B03; text-decoration:none;}
+#btleftPan .more{width:73px; height:25px; float: right; margin:50px 0 0 0; font:12px/24px Arial, Helvetica, sans-serif; font-weight:bold; text-transform:uppercase;}
+#btleftPan .more a{width:53px; height:25px; display:block; background:url(images/rollover-nor.gif) 0 0 no-repeat #FAFAFA; color:#fff; padding:0 0 0 20px; text-decoration:none;}
+#btleftPan .more a:hover{background:url(images/rollover-hover.gif) 0 0 no-repeat #FAFAFA; color:#A67B03; text-decoration:none;}
+
+#btleftPan .views{width:150px; height:25px; float:left; margin:50px 0 0 0; font:12px/24px Arial, Helvetica, sans-serif;}
 
 #btleftPan h1{width:520px;  background:#fff; color:#ff8700; font:24px/30px Georgia, "Times New Roman", Times, serif;}
 
@@ -152,6 +154,7 @@ a.dwa {
 a.tab {color:white;}
 td.row1 {background-color: #f8f8f8;}
 td.row2 {background-color: white;}
+td.text_right {text-align: right;}
 
 hr {
     border: 0;

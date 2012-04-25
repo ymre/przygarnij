@@ -8,7 +8,7 @@ admin.site.register(UserInfo, InfoAdmin)
 
 
 class AdvertAdmin(admin.ModelAdmin):
-    list_display = ('user', 'title', 'city', 'add_time', 'enable')
+    list_display = ('user', 'title', 'city', 'add_time', 'enable', 'count')
     list_filter = ('user', 'city', 'enable', 'add_time',)
     ordering = ['-add_time']
     search_fields = ('title',)

@@ -12,7 +12,6 @@
 <p class="right"><span>Dodano: </span> {{ adv.add_time|date:"d-m-y" }}</p>
     </br>
     <hr>
-
     <p><Span>Co:</Span> {{ adv.what|linebreaks }}</p>
     </br>
 
@@ -25,10 +24,12 @@
 <a class="dwa" href="{{ MEDIA_URL }}{{ photo.image.name}}" rel="lightbox[kwiatki]"><img src="{% thumbnail photo.image 200x120 %}"></a>
 {% endfor %}
 
+<div style="clear: both"></div>
+<div class="views">Ilość wyświetleń: {{ adv.count }}</div>
 {% if adv.user == user %}
-    <p class="more"><a href="{% url adv_edit adv.id %}">edytuj</a></p>
+    <div class="more"><a href="{% url adv_edit adv.id %}">edytuj</a></div>
 {% else %}
-    <p class="more"><a href="{% url adv_ans adv.id %}">odpisz</a></p>
+    <div class="more"><a href="{% url adv_ans adv.id %}">odpisz</a></div>
 {% endif %}
 
 {% endblock %}

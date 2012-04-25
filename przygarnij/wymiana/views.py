@@ -68,6 +68,12 @@ class AdvertView(DetailView):
         context['photo_list'] = Photo.objects.filter(adv=self.object.pk)
         return context
 
+    def get_object(self, queryset=None):
+        obj = super(AdvertView, self).get_object()
+        obj.count_add_one()
+        obj.save()
+        return obj
+
 
 class InfoFormView(FormView):
     template_name = 'user_info.html'

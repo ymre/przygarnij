@@ -37,9 +37,11 @@ class ViewTest(TestCase):
         self.assertEqual([adv.pk for adv in resp.context['lista']], [3, 2, 1])
 
     def test_adv(self):
+        adv = Advert.objects.get(pk=3)
         resp = self.client.get(reverse('adv', args=[3]))
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.context['adv'], Advert.objects.get(pk=3))
+        self.assertEqual(resp.context['adv'], adv)
+        self.assertEqual(adv.count + 1, Advert.objects.get(pk=3).count)
 
         resp = self.client.get(reverse('adv', args=[0]))
         self.assertEqual(resp.status_code, 404)
