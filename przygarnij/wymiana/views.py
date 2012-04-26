@@ -28,12 +28,14 @@ class PanelView(ListView):
     context_object_name = 'lista'
 
     def get_queryset(self):
-        adv = Advert.objects.filter(user=self.request.user, enable=True)
+        from django.db.models import Count
+        adv = Advert.objects.filter(user=self.request.user, enable=True).annotate(interest_count=Count('answer'))
         return adv
 
     def get_context_data(self, **kwargs):
         context = super(PanelView, self).get_context_data(**kwargs)
         context['info'] = UserInfo.objects.filter(user=self.request.user)
+        context['answers'] = Advert.objects.filter(answer__user=self.request.user)
         return context
 
 
