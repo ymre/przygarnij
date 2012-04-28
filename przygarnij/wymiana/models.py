@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from PIL import Image
+import os
 
 
 class UserInfo(models.Model):
@@ -67,12 +68,17 @@ class Photo(models.Model):
     def __unicode__(self):
         return self.image.name
 
-    def thumbnail(self):
-        return """<a href="/img/%s"><img border="0" alt="" src="/img/%s" height="40" /></a>""" % ((self.image.name, self.image.name))
+    def admin_img(self):
+        if os.path.exists(settings.ROOT_DIR + self.image.url +
+                ".200x120_q85.jpg"):
+            return u'<img src="%s.200x120_q85.jpg" />' % (self.image.url)
+        return u'<img src="%s" />' % (self.image.url)
+
+    admin_img.short_description = 'Thumbnail'
+    admin_img.allow_tags = True
 
     def save(self, *args, **kwargs):
         import shutil
-        import os
 
         if not self.id and not self.image:
             return

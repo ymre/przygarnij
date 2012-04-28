@@ -2,6 +2,7 @@
 from django.contrib import admin
 from models import *
 
+
 class InfoAdmin(admin.ModelAdmin):
     list_display = ('user', 'info')
 admin.site.register(UserInfo, InfoAdmin)
@@ -15,10 +16,12 @@ class AdvertAdmin(admin.ModelAdmin):
 
 admin.site.register(Advert, AdvertAdmin)
 
+
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('adv', 'image')
+    list_display = ('adv', 'admin_img')
 
 admin.site.register(Photo, PhotoAdmin)
+
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('adv', 'user', 'email', 'date')
