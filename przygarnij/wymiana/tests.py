@@ -73,11 +73,11 @@ class ViewTest(TestCase):
         }
         adv_count = Advert.objects.all().count()
         resp = self.client.post(reverse('adv_add'), data)
-        self.assertRedirects(resp, reverse('index'), status_code=302,
-                target_status_code=200)
+        adv = Advert.objects.all().latest('pk')
+        self.assertRedirects(resp, reverse('adv', args=[adv.pk]),
+                status_code=302, target_status_code=200)
         self.assertEqual(Advert.objects.all().count(), adv_count + 1)
 
-        adv = Advert.objects.all().latest('pk')
         self.assertEqual(adv.user, User.objects.get(username='franek'))
         self.assertEqual(adv.enable, True)
 
@@ -99,13 +99,13 @@ class ViewTest(TestCase):
         adv_count = Advert.objects.all().count()
 
         resp = self.client.post(reverse('adv_add'), data)
-        self.assertRedirects(resp, reverse('index'), status_code=302,
-                target_status_code=200)
+        adv = Advert.objects.all().latest('pk')
+        self.assertRedirects(resp, reverse('adv', args=[adv.pk]),
+                status_code=302, target_status_code=200)
 
         self.assertEqual(Advert.objects.all().count(), adv_count + 1)
         self.assertEqual(photo_count + 1, Photo.objects.all().count())
 
-        adv = Advert.objects.all().latest('pk')
         photo = Photo.objects.all().latest('pk')
         self.assertEqual(photo.image.name, '%s.jpg' % photo.pk)
         self.assertEqual(photo.adv, adv)

@@ -188,7 +188,7 @@ class AdvertAddView(FormView):
             for photo in photos:
                 photo.adv = adv
                 photo.save()
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('adv', args=[adv.pk]))
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
