@@ -6,6 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^sentry/', include('sentry.web.urls')),
     url(r'^', include('wymiana.urls')),
     url(r'^', include('accounts.urls')),
     url(r'^captcha/', include('captcha.urls')),

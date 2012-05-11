@@ -3,3 +3,6 @@ South==0.7.3
 coverage
 easy-thumbnails
 django-simple-captcha
+milkman
+PIL
+django-debug-toolbar

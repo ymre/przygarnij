@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from wymiana.models import *
+from django.utils import translation
 
 from milkman.dairy import milkman
 
@@ -15,6 +16,9 @@ TESTS_DIR = os.path.dirname(__file__)
 
 class ViewTest(TestCase):
     fixtures = ['testing.json']
+
+    def setUp(self):
+        translation.activate('EN')
 
     def check_login_required(self, url):
         resp = self.client.get(url)
