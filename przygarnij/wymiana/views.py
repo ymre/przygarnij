@@ -46,6 +46,7 @@ class UserView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User,
                 username=self.kwargs.get('username', None))
+        self.user = user
         return Advert.objects.filter(user=user, enable=True)
 
     def get_context_data(self, **kwargs):
@@ -53,6 +54,7 @@ class UserView(ListView):
                 username=self.kwargs.get('username', None))
         context = super(UserView, self).get_context_data(**kwargs)
         context['info'] = UserInfo.objects.filter(user=user)
+        context['usr'] = self.user
         return context
 
 
@@ -206,11 +208,7 @@ class AdvertAddView(FormView):
 
 @login_required
 def adv_delete(request, pk):
-    adv = get_object_or_404(
-        Advert,
-        user=request.user,
-        pk=pk
-    )
+    adv = get_object_or_404(Advert, user=request.user, pk=pk)
 
     if request.method == 'POST':
         adv_pk = request.POST.get('pk')

@@ -12,13 +12,15 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 def register(request):
 	if request.method == 'POST':
 		form = MyUserCreationForm(request.POST)
 		if form.is_valid():
 			new_user = form.save()
-			return HttpResponseRedirect(reverse('panel'))
+			messages.add_message(request, messages.SUCCESS, u'Rejestracja przebiegła poprawnie, możesz się zalogować.')
+			return HttpResponseRedirect(reverse('login'))
 	else:
 		form = MyUserCreationForm()
 	return render_to_response('register.html', {'form': form,}, context_instance = RequestContext(request) )
