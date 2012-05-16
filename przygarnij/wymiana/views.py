@@ -9,7 +9,7 @@ from django.forms.models import modelformset_factory
 from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
 from django.http import Http404
-
+from django.contrib import messages
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
@@ -130,8 +130,9 @@ class AnswerView(FormView):
             headers={'Reply-To': ans.email, 'Content-type': 'text/html; charset=UTF-8'}
         )
         mail.send()
-
-        return HttpResponseRedirect(reverse('index'))
+        messages.add_message(self.request, messages.SUCCESS,
+                u'Odpowiedź na ogłoszenie została wysłana.')
+        return HttpResponseRedirect(reverse('adv_list'))
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))

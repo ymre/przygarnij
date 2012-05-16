@@ -236,7 +236,7 @@ class ViewTest(TestCase):
         mail.outbox = []
         resp = self.client.post(reverse('adv_ans', args=[1]),
                 {'message': mes})
-        self.assertRedirects(resp, reverse('index'), status_code=302,
+        self.assertRedirects(resp, reverse('adv_list'), status_code=302,
                 target_status_code=200)
         ans = Answer.objects.all().latest('pk')
 
@@ -263,7 +263,7 @@ class ViewTest(TestCase):
                     'captcha_0': captcha.hashkey,
                     'captcha_1': captcha.response
                 })
-        self.assertRedirects(resp, reverse('index'), status_code=302,
+        self.assertRedirects(resp, reverse('adv_list'), status_code=302,
                 target_status_code=200)
 
         ans = Answer.objects.all().latest('pk')
