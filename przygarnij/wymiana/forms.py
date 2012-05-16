@@ -22,12 +22,6 @@ class AdvertForm(forms.ModelForm):
 
 
 class AnswerForm(forms.ModelForm):
-    class Meta:
-        model = Answer
-        fields = ('message',)
-
-
-class AnonymousAnswerForm(forms.ModelForm):
     captcha = CaptchaField()
 
     class Meta:
@@ -35,10 +29,12 @@ class AnonymousAnswerForm(forms.ModelForm):
         fields = ('email', 'message')
 
     def __init__(self, *args, **kwargs):
-        super(AnonymousAnswerForm, self).__init__(*args, **kwargs)
-
-        for key in ['email']:
-            self.fields[key].required = True
+        super(AnswerForm, self).__init__(*args, **kwargs)
+        if kwargs['initial']['user'].is_authenticated():
+            del(self.fields['email'])
+            del(self.fields['captcha'])
+        else:
+            self.fields['email'].required = True
 
 
 class SearchForm(forms.Form):

@@ -104,9 +104,12 @@ class AnswerView(FormView):
     form_class = Answer
 
     def get_form_class(self):
-        if self.request.user.is_authenticated():
-            return AnswerForm
-        return AnonymousAnswerForm
+        return AnswerForm
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(AnswerView, self).get_form_kwargs(**kwargs)
+        kwargs['initial']['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         adv = get_object_or_404(Advert, pk=self.kwargs.get('pk', None))
